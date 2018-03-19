@@ -34,4 +34,6 @@ def get_recommended_offers(user, limit=3):
     return query.order_by(func.random())\
                 .limit(limit)
 
+# ADD fonction reco ASAP 
+
 app.reco.offers = get_recommended_offers
