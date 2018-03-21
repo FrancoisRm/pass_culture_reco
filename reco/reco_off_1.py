@@ -10,27 +10,46 @@ UserMediation = app.model.UserMediation
 UserMediationOffer = app.model.UserMediationOffer
 Thing = app.model.Thing
 
-def get_recommended_offers(user, limit=3):
-    query = Offer.query
-    print('before tri offers.count', query.count())
-      if user.is_authenticated:
-       query = tri(query)
 
 
 ##### DEF FUNCTION TRI
 
-def cluster():
-  ordre = Offer.ordre() #renvoie un vecteur avec l'ordre de préférence de types
-  query = Offer.query
-  query = query.order_by((Thing.type) |
-                         (Event.type))
-  n = Thing.amount_of_type
-  m = Event.amount_of_type
-  Thing_type = Thing.list_of_type
-  Event_type = Event.list_of_type
-  Cluster = [0]*ordre.length
+def attraction(L1,L2):
+    n1 = L1.length
+    attractivite = 0
+    for i in range(n1):
+        attractivite += L1[i]*L2[i]
+    return attractivite 
 
-  for i in range(ordre.length()):
-    Cluster[i].append(query WHERE query.Thing or Event.type = ordre[i])
 
-  RETURN Cluster 
+
+def get_reco_offers(user,limit=1):
+    query = Offer.query
+    # REMOVE OFFERS FOR WHICH THERE IS ALREADY A MEDIATION FOR THIS USER
+    print('before userMediation offers.count', query.count())
+    if user.is_authenticated:
+        query = query.filter(
+            ~Offer.userMediationOffers.any() |\
+            Offer.userMediationOffers.any(UserMediation.user != user)
+        )
+
+    # REMOVE OFFERS WITHOUT THUMBS
+    print('after userMediation offers.count', query.count())
+    query = query.outerjoin(Thing)\
+                 .outerjoin(EventOccurence)\
+                 .outerjoin(Event)\
+                 .filter((Thing.thumbCount > 0) |
+                         (Event.thumbCount > 0))
+    print('before tri offers.count', query.count())
+        if user.is_authenticated:
+            best = 0
+            index = 0
+            n = query.length
+            L1 = user.preferences
+            for i in range(n):
+                L2 = offer.preferences
+                if attraction(L1,L2) > best:
+                    index = i
+                    best = attraction(L1,L2)
+        query.delete(element.at(index))
+        return element.at(index)
