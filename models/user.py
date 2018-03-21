@@ -34,13 +34,23 @@ class User(app.model.PcObject,
 
 
     #When a user likes an offer
-    def chooseOffer(offer, liked=true):
-        accepted.append(offer)
+    def chooseOffer(offer, liked):
+        n=seen.length
+        if(liked):
+            accepted.append(offer)
+
+            for i in range(Offer.tags.length):
+                (n/(n+1))*preferences[i] + (1/(n+1))*offer.preferences[i]
+        else:
+            rejected.append(offer)
+            for i in range(Offer.tags.length):
+                (n/(n+1))*preferences[i] + (1/(n+1))*(1-offer.preferences[i])
+
         seen.append(offer)
 
-        n=accepted.length
-        for i in range(Offer.tags.length):
-            (n/(n+1))*preferences[i] + (1/(n+1))*offer.preferences[i]
+
+
+
 
 
     def checkPassword(self, passwordToCheck):
