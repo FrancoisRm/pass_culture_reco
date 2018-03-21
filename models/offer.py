@@ -76,6 +76,8 @@ class Offer(app.model.PcObject,
                           nullable=False,
                           default=1)
 
+    tags=["Théâtre", "Cinéma", "Classique", "Musique", "Opéra", "Concert", "Exposition", "Musée", "Science-fiction"]
+
     @hybrid_property
     def object(self):
         return self.thing or self.eventOccurence

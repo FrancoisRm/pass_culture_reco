@@ -19,6 +19,8 @@ class User(app.model.PcObject,
 
     account = db.Column(db.Numeric(10,2))
 
+    
+
     def checkPassword(self, passwordToCheck):
         return bcrypt.hashpw(passwordToCheck.encode('utf-8'), self.password) == self.password
 
