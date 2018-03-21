@@ -12,8 +12,8 @@ Thing = app.model.Thing
 
 
 
-##### DEF FUNCTION TRI
-
+## DEF FONCTION ATTRACTION : FIRST VERSION
+## TOdO : normaliser les vecteurs preferences 
 def attraction(L1,L2):
     n1 = L1.length
     attractivite = 0
@@ -40,7 +40,7 @@ def get_reco_offers(user,limit=1):
                  .outerjoin(Event)\
                  .filter((Thing.thumbCount > 0) |
                          (Event.thumbCount > 0))
-    # KEEP THE BEST OFFER FOR OUR USER
+    # KEEP THE BEST OFFER THE USER
     print('before tri offers.count', query.count())
         if user.is_authenticated:
             best = 0
