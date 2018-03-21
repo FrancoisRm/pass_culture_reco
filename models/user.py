@@ -21,6 +21,26 @@ class User(app.model.PcObject,
 
     preferences=[1]*Offer.tags.length
 
+    #What the users liked (type Offer)
+    accepted=[]
+
+    #What the user disliked (type Offer)
+    rejected=[]
+
+    #The offers the user has already seen
+    seen=accepted+rejected
+
+
+
+
+    #When a user likes an offer
+    def chooseOffer(offer, liked=true):
+        accepted.append(offer)
+        seen.append(offer)
+
+        n=accepted.length
+        for i in range(Offer.tags.length):
+            (n/(n+1))*preferences[i] + (1/(n+1))*offer.preferences[i]
 
 
     def checkPassword(self, passwordToCheck):
