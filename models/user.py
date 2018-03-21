@@ -19,7 +19,9 @@ class User(app.model.PcObject,
 
     account = db.Column(db.Numeric(10,2))
 
-    
+    preferences=[1]*Offer.tags.length
+
+
 
     def checkPassword(self, passwordToCheck):
         return bcrypt.hashpw(passwordToCheck.encode('utf-8'), self.password) == self.password

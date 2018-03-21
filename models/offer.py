@@ -78,6 +78,8 @@ class Offer(app.model.PcObject,
 
     tags=["Théâtre", "Cinéma", "Classique", "Musique", "Opéra", "Concert", "Exposition", "Musée", "Science-fiction"]
 
+    preferences = [1]*tags.length
+
     @hybrid_property
     def object(self):
         return self.thing or self.eventOccurence
