@@ -19,7 +19,7 @@ def attraction(L1,L2):
     attractivite = 0
     for i in range(n1):
         attractivite += L1[i]*L2[i]
-    return attractivite 
+    return attractivite
 
 
 
@@ -40,6 +40,7 @@ def get_reco_offers(user,limit=1):
                  .outerjoin(Event)\
                  .filter((Thing.thumbCount > 0) |
                          (Event.thumbCount > 0))
+    # KEEP THE BEST OFFER FOR OUR USER
     print('before tri offers.count', query.count())
         if user.is_authenticated:
             best = 0
@@ -51,5 +52,6 @@ def get_reco_offers(user,limit=1):
                 if attraction(L1,L2) > best:
                     index = i
                     best = attraction(L1,L2)
-        query.delete(element.at(index))
-        return element.at(index)
+        Proposition = query.get(index)
+        query.delete(query.get(index))
+        return Proposition
